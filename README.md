@@ -1,0 +1,2 @@
+# thrift-shop
+Ecommerce project
