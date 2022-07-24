@@ -1,10 +1,16 @@
-import './categories.styles.scss'
-import Category from './components/category/category-component';
-
-
+import Home from "./routes/home/home.component";
+import SignIn from "./routes/sign-in/sign-in.component"
+import { Routes, Route } from "react-router-dom";
+import Navigation from "./components/navigation/navigation.component";
 function App() {
   return (
-   <Category></Category>
+    <Routes>
+      <Route path='/' element={<Navigation></Navigation>}>
+      <Route index  element={<Home/>} />
+      <Route path="/sign-in"  element={<SignIn/>} />
+      </Route>
+      {/* <Home></Home> */}
+    </Routes>
   );
 }
 

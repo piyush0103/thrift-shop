@@ -1,6 +1,6 @@
 import React from 'react'
 import CategoryItem from '../category-item/category-item.component'
-
+import './category-container.styles.scss'
 const categories = [
     {
       "id": 1,
@@ -36,6 +36,7 @@ export default function Category() {
         console.log('printing in category',category)
       return<CategoryItem key={category.id}  category={category}></CategoryItem>
       })}
+      <h2>Heyyy</h2>
     </div>
     )
 }
