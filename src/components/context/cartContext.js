@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect, createContext } from "react";
-
 const findProduct = (products, productToAdd) => {
   return products.find((product) => {
     if (product.id === productToAdd.id) {
@@ -95,7 +94,7 @@ export const CartContextProvider = ({ children }) => {
     // }
   }, [products]);
   const addProductToCart = (productToAdd) => {
-    console.log("here it is coming.....", productToAdd);
+   
     setProducts(addProduct(products, productToAdd));
   };
   const deleteProductFromCart = (productToRemove) => {

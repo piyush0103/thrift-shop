@@ -1,9 +1,7 @@
-.category-container {
-  // width: 30%;
+.directory-item-container {
   min-width: 30%;
   height: 240px;
   flex: 1 1 auto;
-  display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid black;
@@ -18,12 +16,15 @@
       transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
     }
 
-    & .category-body-container {
+    & .directory-item-body {
       opacity: 0.9;
+     background-color: aliceblue;
+      // position: initial;
+      align-items: initial;
     }
   }
 
-  &.large {
+  & .large {
     height: 380px;
   }
 
@@ -42,15 +43,16 @@
     background-position: center;
   }
 
-  .category-body-container {
+  .directory-item-body {
     height: 90px;
     padding: 0 25px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+  
+    // align-items: flex-end;
     justify-content: center;
     border: 1px solid black;
-    background-color: white;
+    background-color: rgb(100, 94, 94);
     opacity: 0.7;
     position: absolute;
 

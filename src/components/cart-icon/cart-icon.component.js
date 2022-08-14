@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 import "./cart-icon.styles.scss";
+import { CartIconContainer, ShoppingSvgContainer, ItemCount } from "./cart-icon.styles";
 import { CartContext } from "../context/cartContext";
 export default function CartIcon({}) {
   const { products, setProducts, isCartDropDownOpen, setIsCartDropDownOpen } =
@@ -14,16 +15,25 @@ export default function CartIcon({}) {
     } else {
       setIsCartDropDownOpen(false);
     }
-  }
+  };
 
   return (
-    <div
+    // <div
+    //   className="cart-icon-container"
+    //   onMouseOver={handleCartDropDowntoggle}
+    //   onMouseOut={handleCartDropDowntoggle}
+    // >
+    //   <ShoppingIcon className="shopping-icon"></ShoppingIcon>
+    //   <span className="item-count">{products.length} </span>
+    // </div>
+
+    <CartIconContainer
       className="cart-icon-container"
       onMouseOver={handleCartDropDowntoggle}
       onMouseOut={handleCartDropDowntoggle}
     >
-      <ShoppingIcon className="shopping-icon"></ShoppingIcon>
-      <span className="item-count">{products.length} </span>
-    </div>
+      <ShoppingSvgContainer className="shopping-icon"></ShoppingSvgContainer>
+      <ItemCount className="item-count">{products.length} </ItemCount>
+    </CartIconContainer>
   );
 }

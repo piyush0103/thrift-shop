@@ -1,19 +1,32 @@
 import { useContext, useState, useEffect, createContext } from "react";
-import SHOP_DATA from "../../shop-data.json";
-
-export const ProductContext = createContext({
-  products:[],
-  setProducts: () => null,
+// import SHOP_DATA from "../../shop-data.json"
+import { getCategoriesCollections } from "../../utils/firebase/firebase.utils";
+export const CategoryContext = createContext({
+  categoryMap: {},
+  setCategoryMap: () => null,
 });
 
-export const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState(SHOP_DATA);
-//  console.log('printing from contex product...',products)
-//   useEffect(() => {
-//     setProducts(SHOP_DATA);
-//   }, [products]);
+export const CategoryProvider = ({ children }) => {
+  const [categoryMap, setCategoryMap] = useState({});
+  //  console.log('printing from contex product...',products)
+  //   useEffect(() => {
+  //     setProducts(SHOP_DATA);
+  //   }, [products]);
 
-const value={products}
+  const getcategoryMap=async ()=>{
 
-return(<ProductContext.Provider value={value}>{children}</ProductContext.Provider>)
+    const categoryMap=await  getCategoriesCollections()
+    console.log('printing category map',categoryMap)
+    setCategoryMap(categoryMap)
+  }
+useEffect(() => {
+  getcategoryMap()
+
+}, [])
+
+  const value = { categoryMap };
+
+  return (
+    <CategoryContext.Provider value={value}>{children}</CategoryContext.Provider>
+  );
 };

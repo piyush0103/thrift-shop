@@ -10,7 +10,7 @@ function App() {
       <Route path='/' element={<Navigation></Navigation>}>
       <Route index  element={<Home/>} />
       <Route path="/user-auth"  element={<UserLogIn/>} />
-       <Route path="/shop"  element={<Shop/>} />
+       <Route path="/shop/*"  element={<Shop/>} />
        <Route path="/cart"  element={<Cart/>} />
       </Route>
 

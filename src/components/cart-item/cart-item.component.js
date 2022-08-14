@@ -2,7 +2,7 @@ import React from 'react'
 import './cart-item.styles.scss'
 export default function CartItem({cartItem}) {
     const {id,name,imageUrl, price,quantity}=cartItem
-    console.log('coming in cart ITEM',cartItem)
+    // console.log('coming in cart ITEM',cartItem)
     return (
         <div className="cart-item-container">
             <img src={imageUrl} alt="" />

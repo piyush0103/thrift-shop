@@ -3,7 +3,9 @@ import { UserContext } from "../../components/context/user-context";
 import { CartContext } from "../../components/context/cartContext";
 import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
-import "./navigation.styles.scss";
+// import "./navigation.styles.scss";
+import {NavigationContainer,LogoContainer,NavLinksContainer,NavLink} from "./navigation.styles";
+// import ""
 import { userSignOut } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../cart-icon/cart-icon.component";
 
@@ -22,12 +24,16 @@ export default function Navigation() {
 
   return (
     <React.Fragment>
-      <div className="navigation">
-        <div className="nav-logo">
-          <Link className="nav-links" to="/">
+      <NavigationContainer>
+        
+         {/* <div className="navigation"> */}
+        {/* <div className="nav-logo"> */}
+          {/* <Link className="logo-container" to="/"> */}
+          <LogoContainer to="/">
             <Logo></Logo>
-          </Link>
-        </div>
+          {/* </Link> */}
+          </LogoContainer>
+        {/* </div>
         <div className="nav-links-container">
           <Link className="nav-links" to="/shop">
             Shop
@@ -49,9 +55,35 @@ export default function Navigation() {
           <Link className="nav-links" to="/cart">
           <CartIcon></CartIcon>
           </Link>
-        </div>
-        {isCartDropDownOpen && <CartDropDown></CartDropDown>}
-      </div>
+        </div> */}
+        {/* {isCartDropDownOpen && <CartDropDown></CartDropDown>} */}
+      {/* </div> */}
+
+      <NavLinksContainer>
+          <NavLink to="/shop">
+            Shop
+          </NavLink>
+          {currentUser ? (
+            <span className="nav-link" onClick={handleSignOut}>
+              SignOut
+            </span>
+          ) : (
+            <NavLink to="/user-auth">
+              SignIn
+            </NavLink>
+          )}
+
+          <NavLink to="/user-auth">
+            SignUP
+          </NavLink>
+
+          <NavLink as="span" to="/cart">
+          <CartIcon></CartIcon>
+          </NavLink>
+        </NavLinksContainer> 
+
+    {isCartDropDownOpen && <CartDropDown></CartDropDown>}
+      </NavigationContainer>
       <Outlet />
     </React.Fragment>
   );

@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import "./product-card.styles.scss";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button-component";
-// import './'
+
 import { CartContext } from "../context/cartContext";
 export default function ProductCard({ item }) {
   const { id, name, imageUrl, price } = item;
   const { products, addProductToCart } =
   useContext(CartContext);
   const handleAddItemToCart=()=>{
-    console.log('did the event fire...')
+ 
 addProductToCart(item)
   }
   return (
