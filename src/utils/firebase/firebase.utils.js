@@ -111,7 +111,7 @@ export const addCollectionsToFireStore = async (
   collectionKey,
   objectsToAdd
 ) => {
-  const collectionRef = collection(db, collectionKey);
+  const   collectionRef = collection(db, collectionKey);
   const batch = writeBatch(db);
 
   objectsToAdd.forEach((object) => {
@@ -128,13 +128,17 @@ export const getCategoriesCollections =async ()=>{
   const q=query(collectionRef)
 
   const querySnapshot=await getDocs(q)
-console.log('well what do we have querysnapshot',querySnapshot)
-  const categoryMap=querySnapshot.docs.reduce((acc,docSnapshot)=>{
-    const {title,items}=docSnapshot.data();
-    acc[title.toLowerCase()]=items
-    console.log('well what do we have acc',acc)
+  console.log("fetched querySnapshot in firebase utils..",querySnapshot.docs)
+return querySnapshot.docs.map(docSnapShop=>docSnapShop.data())
 
-    return acc
-  },{})
-return categoryMap
+
+//   console.log('well what do we have querysnapshot',querySnapshot)
+//     const categoryMap=querySnapshot.docs.reduce((acc,docSnapshot)=>{
+//       const {title,items}=docSnapshot.data();
+//       acc[title.toLowerCase()]=items
+//       console.log('well what do we have acc',acc)
+
+//       return acc
+//     },{})
+// return categoryMap
 }

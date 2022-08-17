@@ -1,14 +1,31 @@
 import "./shopping-cart.styles.scss";
 import { CartContext } from "../../components/context/cartContext";
 import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addProductToCart,
+  deleteProductFromCart,
+  removeProductFromCart,
+} from "../../store/cart/cart-action";
+import {
+  selectCartItems,
+  selectCartTotal,
+} from "../../store/cart/cart-selector";
 export default function ShoppingCart({ orderItem }) {
-  const {
-    addProductToCart,
-    deleteProductFromCart,
-    cartTotal,
-    removeProductFromCart,
-  } = useContext(CartContext);
+  console.log("prinitng from shoppingbag...", orderItem);
+  // const {
+  //   addProductToCart,
+  //   deleteProductFromCart,
+  //   cartTotal,
+  //   removeProductFromCart,
+  // } = useContext(CartContext);
+  const dispatch = useDispatch();
+
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
+
   const { id, name, imageUrl, price, quantity } = orderItem;
+
   return (
     <div className="shopping-cart-container">
       <div className="item-container">
@@ -19,12 +36,17 @@ export default function ShoppingCart({ orderItem }) {
         <div className="quantity-section">
           <div
             className="arrow"
-            onClick={() => deleteProductFromCart(orderItem)}
+            onClick={() =>
+              dispatch(deleteProductFromCart(cartItems, orderItem))
+            }
           >
             &#10094;
           </div>
           <span className="quantity"> {quantity}</span>
-          <div className="arrow" onClick={() => addProductToCart(orderItem)}>
+          <div
+            className="arrow"
+            onClick={() => dispatch(addProductToCart(cartItems, orderItem))}
+          >
             &#10095;
           </div>
         </div>
@@ -34,7 +56,7 @@ export default function ShoppingCart({ orderItem }) {
         </div>
         <div
           className="remove-button"
-          onClick={() => removeProductFromCart(orderItem)}
+          onClick={() => dispatch((cartItems, orderItem))}
         >
           &#10005;
         </div>

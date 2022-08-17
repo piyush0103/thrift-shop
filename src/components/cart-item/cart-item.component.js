@@ -5,6 +5,7 @@ export default function CartItem({cartItem}) {
     // console.log('coming in cart ITEM',cartItem)
     return (
         <div className="cart-item-container">
+            kdfnbvkjdn
             <img src={imageUrl} alt="" />
             <div className="item-details">
           

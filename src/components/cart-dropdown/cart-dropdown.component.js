@@ -5,11 +5,17 @@ import { CartContext } from "../context/cartContext";
 import CartItem from '../cart-item/cart-item.component'
 import "./cart-dropdown.styles.scss";
 import {CartDropdownContainer,CartItemContainer,EmptyMessage} from "./cart-dropdown.styles"
-
+import {useSelector} from 'react-redux'
+import {selectCartDropDownToggle,selectCartItems} from '../../store/cart/cart-selector'
 export default function CartDropdown() {
-  const { products, setProducts, isCartDropDownOpen, setIsCartDropDownOpen } =
-    useContext(CartContext);
-    console.log('printing from cart-dropdown',products,isCartDropDownOpen)
+  // const { cartItems, setProducts, isCartDropDownOpen, setIsCartDropDownOpen } =
+  //   useContext(CartContext);
+
+  const isCartDropDownOpen =useSelector(selectCartDropDownToggle)
+  const cartItems =useSelector(selectCartItems)
+
+  
+    console.log('printing from cart-dropdown component',cartItems,isCartDropDownOpen)
 
     const handleGoToCheckOut=()=>{
       
@@ -40,7 +46,7 @@ export default function CartDropdown() {
       <CartItemContainer >
         {
         
-        products.length ? products.map((product) => {
+        cartItems.length ? cartItems.map((product) => {
           return <CartItem key={product.id} cartItem={product}></CartItem>;
         }):(<EmptyMessage>Your cart is Empty</EmptyMessage>)
       }

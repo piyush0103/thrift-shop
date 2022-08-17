@@ -2,9 +2,18 @@ import React, { useContext } from "react";
 import ShoppingCart from "../../components/Shopping-bag/shopping-cart.component";
 import { CartContext } from "../../components/context/cartContext";
 import './cart.styles.scss'
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCartItems
+} from "../../store/cart/cart-selector";
 const Cart = () => {
-  const { products} =
-    useContext(CartContext);
+//   const {cartItems} =
+// useContext(CartContext);
+const cartItems = useSelector(selectCartItems);  
+
+console.log("printing inside cart compo ",cartItems)
+
+ 
   return (
     <div className="checkout-container">
 <div className="checkout-header">
@@ -17,7 +26,8 @@ const Cart = () => {
 </div>
 </div>
 
-      {products.map((product) => {
+      {cartItems.length &&cartItems.map((product) => {
+        console.log("printing inside cart compo ",product)
         return (
           <ShoppingCart key={product.id} orderItem={product}></ShoppingCart>
         );

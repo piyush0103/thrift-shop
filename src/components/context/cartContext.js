@@ -1,4 +1,31 @@
-import { useContext, useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useReducer } from "react";
+import {createAction} from "../../utils/reducers/reducer.utils";
+
+const INITIAL_STATE = {
+  cartItems: [],
+  cartCount: 0,
+  cartTotal: 0,
+  isCartDropDownOpen: false,
+};
+
+const cartContextReducer = (cartState, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case "SET_CART_ITEM":
+      return {
+        ...cartState,
+        ...payload,
+      };
+    case "SET_CART_DROP_DOWN":
+      return {
+        ...cartState,
+        ...payload,
+      };
+    default:
+      throw new Error("Wrong action in CartReducer");
+  }
+};
+
 const findProduct = (products, productToAdd) => {
   return products.find((product) => {
     if (product.id === productToAdd.id) {
@@ -70,49 +97,77 @@ export const CartContext = createContext({
 });
 
 export const CartContextProvider = ({ children }) => {
-  const [products, setProducts] = useState([]);
-  const [isCartDropDownOpen, setIsCartDropDownOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-  const [cartTotal, setCartTotal] = useState(0);
-  useEffect(() => {
-    const newCartCount = products.reduce((total, product) => {
+  // const [products, setProducts] = useState([]);
+  // const [isCartDropDownOpen, setIsCartDropDownOpen] = useState(false);
+  // const [cartCount, setCartCount] = useState(0);
+  // const [cartTotal, setCartTotal] = useState(0); replaced as part of reducer concept
+
+  const [{ cartItems, cartCount, cartTotal, isCartDropDownOpen }, dispatch] =
+    useReducer(cartContextReducer, INITIAL_STATE);
+
+  const updateCartItemReducer = (newCartItem) => {
+    const newCartCount = newCartItem.reduce((total, product) => {
       return total + product.quantity;
     }, 0);
-    setCartCount(newCartCount);
-    // return () => {
-    //   cleanup
-    // }
-  }, [products]);
 
-  useEffect(() => {
-    const cartTotal = products.reduce((total, product) => {
+    const cartTotal = newCartItem.reduce((total, product) => {
       return total + product.quantity * product.price;
     }, 0);
-    setCartTotal(cartTotal);
-    // return () => {
-    //   cleanup
-    // }
-  }, [products]);
+
+    dispatch(
+      createAction("SET_CART_ITEM", {
+        cartItems: newCartItem,
+        cartCount: newCartCount,
+        cartTotal: cartTotal,
+      })
+    );
+  };
+
+  // useEffect(() => {
+  //   const newCartCount = products.reduce((total, product) => {
+  //     return total + product.quantity;
+  //   }, 0);
+  //   setCartCount(newCartCount);
+
+  // }, [products]);
+
+  // useEffect(() => {
+  //   const cartTotal = products.reduce((total, product) => {
+  //     return total + product.quantity * product.price;
+  //   }, 0);
+  //   setCartTotal(cartTotal);
+
+  // }, [products]);
   const addProductToCart = (productToAdd) => {
-   
-    setProducts(addProduct(products, productToAdd));
+    // setProducts(addProduct(products, productToAdd));
+    const updatedProducts = addProduct(cartItems, productToAdd);
+    updateCartItemReducer(updatedProducts);
   };
   const deleteProductFromCart = (productToRemove) => {
     // console.log('here it is coming.....',productToAdd)
-    setProducts(deleteProduct(products, productToRemove));
+    const updatedProducts = deleteProduct(cartItems, productToRemove);
+    updateCartItemReducer(updatedProducts);
   };
   const removeProductFromCart = (productToRemove) => {
     // console.log('here it is coming.....',productToAdd)
-    setProducts(removeProduct(products, productToRemove));
+    const updatedProducts = removeProduct(cartItems, productToRemove);
+
+    updateCartItemReducer(updatedProducts);
+  };
+
+  const toggleCartDropDown = (cartDropDown) => {
+    console.log("context reached cart context dropdown statuys ", cartDropDown);
+    dispatch(createAction("SET_CART_DROP_DOWN",{ isCartDropDownOpen: cartDropDown}));
   };
   const value = {
-    products,
+    cartItems,
     addProductToCart,
     isCartDropDownOpen,
-    setIsCartDropDownOpen,
     deleteProductFromCart,
     removeProductFromCart,
-    cartTotal
+    toggleCartDropDown,
+    cartTotal,
+    cartCount,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

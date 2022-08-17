@@ -5,16 +5,20 @@ import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 // import "./navigation.styles.scss";
 import {NavigationContainer,LogoContainer,NavLinksContainer,NavLink} from "./navigation.styles";
-// import ""
+import {useSelector} from 'react-redux'
 import { userSignOut } from "../../utils/firebase/firebase.utils";
+import  {currentUserSelectors} from "../../utils/reducers/reducer.utils"
+import {selectCartCount,selectCartDropDownToggle} from '../../store/cart/cart-selector'
 import CartIcon from "../cart-icon/cart-icon.component";
 
 import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component";
 export default function Navigation() {
-  const { currentUser, setcurrentUser } = useContext(UserContext);
-  const { products, addProductToCart, isCartDropDownOpen } =
-    useContext(CartContext);
-  const [cartToggle, setCartToggle] = useState(false);
+ const currentUser = useSelector(currentUserSelectors)
+ const isCartDropDownOpen =useSelector(selectCartDropDownToggle)
+  // const { currentUser, setcurrentUser } = useContext(UserContext); replaced with redux
+  // const { products, addProductToCart, isCartDropDownOpen } =
+  //   useContext(CartContext);
+  // const [cartToggle, setCartToggle] = useState(false);
   console.log(currentUser, "loggin from navigation bar");
   console.log("here in navigation container");
 
@@ -77,7 +81,7 @@ export default function Navigation() {
             SignUP
           </NavLink>
 
-          <NavLink as="span" to="/cart">
+          <NavLink  to="/cart">
           <CartIcon></CartIcon>
           </NavLink>
         </NavLinksContainer> 
